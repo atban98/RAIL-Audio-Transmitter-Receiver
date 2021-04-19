@@ -1,7 +1,7 @@
 #include "ldma.h"
 #include "app_process.h"
 #include "app_task_init.h"
-#include "arm_math.h"
+
 
 volatile bool sendPacket = false;
 
@@ -9,7 +9,8 @@ extern OS_SEM filterTaskSemaphore;
 extern bool adcBufferReady;
 
 extern volatile q15_t *adcBufferPtr;
-extern volatile q15_t *dacBufferPtr;
+
+extern q15_t filterBuffer[DAC_BUFFER_SIZE];
 
 void app_process_action(RAIL_Handle_t rail_handle)
 {
@@ -33,7 +34,7 @@ void app_process_action(RAIL_Handle_t rail_handle)
     if (packet_handle != RAIL_RX_PACKET_HANDLE_INVALID)
     {
         RTOS_ERR err;
-        RAIL_CopyRxPacket(dacBufferPtr, &packet_info);
+        RAIL_CopyRxPacket(filterBuffer, &packet_info);
 
         // Reset RX timer when a packet was received
         TIMER_CounterSet(TIMER1,0);
