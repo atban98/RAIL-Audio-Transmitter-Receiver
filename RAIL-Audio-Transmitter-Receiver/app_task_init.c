@@ -116,7 +116,7 @@ void app_task_init(void)
                (OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR),
                &err);
 
-  OSSemCreate(&filterTaskSemaphore,"Dummy task semaphore",0,&err);
+  OSSemCreate(&filterTaskSemaphore,"Filter task semaphore",0,&err);
 }
 
 static void proprietary_app_task(void *p_arg)
